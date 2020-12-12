@@ -1,5 +1,5 @@
-#ifndef VALUE_DEF_HPP
-#define VALUE_DEF_HPP
+#ifndef INC_AST_VALUE_DEF_HPP
+#define INC_AST_VALUE_DEF_HPP
 
 #include "ast.hpp"
 #include "value.hpp"
@@ -45,4 +45,4 @@ parser::value_type const& value()
 }
 } // end of namespace json_client
 
-#endif // VALUE_DEF_HPP
+#endif // INC_AST_VALUE_DEF_HPP

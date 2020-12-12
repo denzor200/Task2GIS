@@ -1,5 +1,5 @@
-#ifndef VALUE_HPP
-#define VALUE_HPP
+#ifndef INC_AST_VALUE_HPP
+#define INC_AST_VALUE_HPP
 
 #include "ast.hpp"
 #include <boost/spirit/home/x3.hpp>
@@ -15,4 +15,4 @@ namespace parser {
 parser::value_type const& value();
 } // end of namespace json_client
 
-#endif // VALUE_HPP
+#endif // INC_AST_VALUE_HPP

@@ -1,5 +1,5 @@
-#ifndef CONFIG_HPP
-#define CONFIG_HPP
+#ifndef INC_AST_CONFIG_HPP
+#define INC_AST_CONFIG_HPP
 
 #include "error_handler.hpp"
 #include <boost/spirit/home/x3.hpp>
@@ -16,4 +16,4 @@ namespace parser {
 } // end of namespace parser
 } // end of namespace json_client
 
-#endif // CONFIG_HPP
+#endif // INC_AST_CONFIG_HPP

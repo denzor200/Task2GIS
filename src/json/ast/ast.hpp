@@ -1,5 +1,5 @@
-#ifndef AST_HPP
-#define AST_HPP
+#ifndef INC_AST_AST_HPP
+#define INC_AST_AST_HPP
 
 #include <boost/spirit/home/x3/support/ast/position_tagged.hpp>
 #include <boost/spirit/home/x3/support/ast/variant.hpp>
@@ -18,4 +18,4 @@ namespace ast {
 } // end of namespace ast
 } // end of namespace json_client
 
-#endif // AST_HPP
+#endif // INC_AST_AST_HPP

@@ -11,3 +11,7 @@ FILE(GLOB_RECURSE SRC
     )
 
 add_executable(Task2GIS ${SRC})
+
+TARGET_LINK_LIBRARIES(${PROJECT_NAME}
+        boost_program_options
+        )

@@ -1,5 +1,5 @@
-#ifndef ERROR_HANDLER_HPP
-#define ERROR_HANDLER_HPP
+#ifndef INC_AST_ERROR_HANDLER_HPP
+#define INC_AST_ERROR_HANDLER_HPP
 
 #include "value.hpp"
 #include <boost/spirit/home/x3.hpp>
@@ -17,4 +17,4 @@ namespace parser {
 } // end of namespace parser
 } // end of namespace json_client
 
-#endif // ERROR_HANDLER_HPP
+#endif // INC_AST_ERROR_HANDLER_HPP
