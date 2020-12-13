@@ -3,8 +3,6 @@
 
 #include "ast/value.hpp"
 
-// TODO: перевести доки
-
 namespace json {
 
 class array;
@@ -29,272 +27,262 @@ public:
         Null
     };
 
-    /// <summary>
-    /// Constructor creating a null value
-    /// </summary>
+    /**
+     * @brief Конструктор, создающий значение типа "Null"
+     */
     value() = default;
 
-    /// <summary>
-    /// Constructor creating a JSON number value
-    /// </summary>
-    /// <param name="value">The C++ value to create a JSON value from</param>
+    /**
+     * @brief Конструктор, создающий значение типа "Number"
+     * @param value Значение C++ из которого создается JSON-значение
+     */
     value(int32_t value);
 
-    /// <summary>
-    /// Constructor creating a JSON number value
-    /// </summary>
-    /// <param name="value">The C++ value to create a JSON value from</param>
+    /**
+     * @brief Конструктор, создающий значение типа "Number"
+     * @param value Значение C++ из которого создается JSON-значение
+     */
     value(uint32_t value);
 
-    /// <summary>
-    /// Constructor creating a JSON number value
-    /// </summary>
-    /// <param name="value">The C++ value to create a JSON value from</param>
+    /**
+     * @brief Конструктор, создающий значение типа "Number"
+     * @param value Значение C++ из которого создается JSON-значение
+     */
     value(int64_t value);
 
-    /// <summary>
-    /// Constructor creating a JSON number value
-    /// </summary>
-    /// <param name="value">The C++ value to create a JSON value from</param>
+    /**
+     * @brief Конструктор, создающий значение типа "Number"
+     * @param value Значение C++ из которого создается JSON-значение
+     */
     value(uint64_t value);
 
-    /// <summary>
-    /// Constructor creating a JSON number value
-    /// </summary>
-    /// <param name="value">The C++ value to create a JSON value from</param>
+    /**
+     * @brief Конструктор, создающий значение типа "Number"
+     * @param value Значение C++ из которого создается JSON-значение
+     */
     value(double value);
 
-    /// <summary>
-    /// Constructor creating a JSON string value
-    /// </summary>
-    /// <param name="value">The C++ value to create a JSON value from, a C++ STL string of the platform-native character
-    /// width</param> <remarks> This constructor has O(n) performance because it tries to determine if specified string
-    /// has characters that should be properly escaped in JSON. <remarks>
+    /**
+     * @brief Конструктор, создающий значение типа "String"
+     * @param value Значение C++ из которого создается JSON-значение
+     * @remarks Этот конструктор работает за O(n), поскольку он пытается определить, есть ли в указанной строке символы, которые должны быть правильно экранированы в JSON.
+     */
     explicit value(std::string value);
 
-    /// <summary>
-    /// Copy constructor
-    /// </summary>
+    /**
+     * @brief Копирующий конструктор
+     */
     value(const value&);
 
-    /// <summary>
-    /// Move constructor
-    /// </summary>
+    /**
+     * @brief Перемещающий конструктор
+     */
     value(value&&) noexcept;
 
-    /// <summary>
-    /// Assignment operator.
-    /// </summary>
-    /// <returns>The JSON value object that contains the result of the assignment.</returns>
+    /**
+     * @brief Оператор присваивания
+     * @returns JSON-значение, содержащее результат присваивания
+     */
     value& operator=(const value&);
 
-    /// <summary>
-    /// Move assignment operator.
-    /// </summary>
-    /// <returns>The JSON value object that contains the result of the assignment.</returns>
+    /**
+     * @brief Оператор присваивания перемещением
+     * @returns JSON-значение, содержащее результат присваивания
+     */
     value& operator=(value&&) noexcept;
 
-    /// <summary>
-    /// Creates a null value
-    /// </summary>
-    /// <returns>A JSON null value</returns>
+    /**
+     * @brief Создает значение типа "null"
+     * @return JSON-значение типа "null"
+     */
     static value null();
 
-    /// <summary>
-    /// Creates a number value
-    /// </summary>
-    /// <param name="value">The C++ value to create a JSON value from</param>
-    /// <returns>A JSON number value</returns>
+    /**
+     * @brief Создает значение типа "number"
+     * @param value Значение C++ из которого создается JSON-значение
+     * @return JSON-значение типа "number"
+     */
     static value number(double value);
 
-    /// <summary>
-    /// Creates a number value
-    /// </summary>
-    /// <param name="value">The C++ value to create a JSON value from</param>
-    /// <returns>A JSON number value</returns>
+    /**
+     * @brief Создает значение типа "number"
+     * @param value Значение C++ из которого создается JSON-значение
+     * @return JSON-значение типа "number"
+     */
     static value number(int32_t value);
 
-    /// <summary>
-    /// Creates a number value
-    /// </summary>
-    /// <param name="value">The C++ value to create a JSON value from</param>
-    /// <returns>A JSON number value</returns>
+    /**
+     * @brief Создает значение типа "number"
+     * @param value Значение C++ из которого создается JSON-значение
+     * @return JSON-значение типа "number"
+     */
     static value number(uint32_t value);
 
-    /// <summary>
-    /// Creates a number value
-    /// </summary>
-    /// <param name="value">The C++ value to create a JSON value from</param>
-    /// <returns>A JSON number value</returns>
+    /**
+     * @brief Создает значение типа "number"
+     * @param value Значение C++ из которого создается JSON-значение
+     * @return JSON-значение типа "number"
+     */
     static value number(int64_t value);
 
-    /// <summary>
-    /// Creates a number value
-    /// </summary>
-    /// <param name="value">The C++ value to create a JSON value from</param>
-    /// <returns>A JSON number value</returns>
+    /**
+     * @brief Создает значение типа "number"
+     * @param value Значение C++ из которого создается JSON-значение
+     * @return JSON-значение типа "number"
+     */
     static value number(uint64_t value);
 
-    /// <summary>
-    /// Creates a string value
-    /// </summary>
-    /// <param name="value">The C++ value to create a JSON value from</param>
-    /// <returns>A JSON string value</returns>
-    /// <remarks>
-    /// This overload has O(n) performance because it tries to determine if
-    /// specified string has characters that should be properly escaped in JSON.
-    /// </remarks>
+    /**
+     * @brief Создает значение типа "number"
+     * @param value Значение C++ из которого создается JSON-значение
+     * @remarks Функция работает за O(n), поскольку пытается определить, есть ли в указанной строке символы, которые должны быть правильно экранированы в JSON.
+     * @return JSON-значение типа "number"
+     */
     static value string(std::string value);
 
-    /// <summary>
-    /// Creates an empty JSON array
-    /// </summary>
-    /// <returns>An empty JSON array value</returns>
+    /**
+     * @brief Создает пустое значение типа "array"
+     * @return пустое JSON-значение типа "array"
+     */
     static json::value array();
 
-    /// <summary>
-    /// Creates a JSON array
-    /// </summary>
-    /// <param name="size">The initial number of elements of the JSON value</param>
-    /// <returns>A JSON array value</returns>
+    /**
+     * @brief Создает значение типа "array"
+     * @param size изначальное количество элементов в выходном массиве
+     * @return JSON-значение типа "array"
+     */
     static json::value array(size_t size);
 
-    /// <summary>
-    /// Tests for the presence of a field.
-    /// </summary>
-    /// <param name="key">The name of the field</param>
-    /// <returns>True if the field exists, false otherwise.</returns>
+    /**
+     * @brief Проверяет на наличие поля
+     * @param key имя поля
+     * @return false если поле не найдено
+     */
     bool has_field(const std::string& key) const;
 
-    /// <summary>
-    /// Accesses the type of JSON value the current value instance is
-    /// </summary>
-    /// <returns>The value's type</returns>
+    /**
+     * @brief Доступ к JSON-типу текущего значения
+     * @return Тип значения
+     */
     json::value::value_type type() const;
 
-    /// <summary>
-    /// Is the current value a number value?
-    /// </summary>
-    /// <returns><c>true</c> if the value is a number value, <c>false</c> otherwise</returns>
+    /**
+     * @brief Текущее значение является числовым значением?
+     * @return false если не является
+     */
     bool is_number() const;
 
-    /// <summary>
-    /// Is the current value represented as an integer number value?
-    /// </summary>
-    /// <remarks>
-    /// Note that if a json value is a number but represented as a double it can still
-    /// be retrieved as a integer using as_integer(), however the value will be truncated.
-    /// </remarks>
-    /// <returns><c>true</c> if the value is an integer value, <c>false</c> otherwise.</returns>
+    /**
+     * @brief Представлено ли текущее значение как целочисленное значение?
+     * @remarks Обратите внимание, что если значение json является числом, но представлено как double,
+     * его все равно можно получить как целое число с помощью as_integer (), однако значение будет усечено.
+     * @return false если не представлено
+     */
     bool is_integer() const;
 
-    /// <summary>
-    /// Is the current value represented as an double number value?
-    /// </summary>
-    /// <remarks>
-    /// Note that if a json value is a number but represented as a int it can still
-    /// be retrieved as a double using as_double().
-    /// </remarks>
-    /// <returns><c>true</c> if the value is an double value, <c>false</c> otherwise.</returns>
+    /**
+     * @brief Представлено ли текущее значение как double?
+     * @remarks Обратите внимание, что если значение json является числом, но представлено как int,
+     * его все равно можно получить как double с помощью as_double ().
+     * @return false если не представлено
+     */
     bool is_double() const;
 
-    /// <summary>
-    /// Is the current value a string value?
-    /// </summary>
-    /// <returns><c>true</c> if the value is a string value, <c>false</c> otherwise</returns>
+    /**
+     * @brief Текущее значение является строковым значением?
+     * @return false если не является
+     */
     bool is_string() const;
 
-    /// <summary>
-    /// Is the current value an array?
-    /// </summary>
-    /// <returns><c>true</c> if the value is an array, <c>false</c> otherwise</returns>
+    /**
+     * @brief Текущее значение является массивом?
+     * @return false если не является
+     */
     bool is_array() const;
 
-    /// <summary>
-    /// Is the current value an object?
-    /// </summary>
-    /// <returns><c>true</c> if the value is an object, <c>false</c> otherwise</returns>
+    /**
+     * @brief Текущее значение является объектом?
+     * @return false если не является
+     */
     bool is_object() const;
 
-    /// <summary>
-    /// Gets the number of children of the value.
-    /// </summary>
-    /// <returns>The number of children. 0 for all non-composites.</returns>
+    /**
+     * @brief Возвращает количество дочерних объектов.
+     * @return Количество дочерних объектов. 0 для всех не композитных
+     */
     size_t size() const;
 
-    /// <summary>
-    /// Parses a string and construct a JSON value.
-    /// </summary>
-    /// <param name="value">The C++ value to create a JSON value from, a C++ STL string of the
-    /// platform-native character width</param>
+    /**
+     * @brief Выполняет парсинг строки и конструирует JSON-значение.
+     * @param value Значение C++ из которого создается JSON-значение
+     */
     static value parse(const std::string& value);
 
-    /// <summary>
-    /// Serializes the current JSON value to a C++ string.
-    /// </summary>
-    /// <returns>A string representation of the value</returns>
+    /**
+     * @brief Выполняет сериализацию текущего JSON-значения в C++ строку
+     * @return Представление значения в виде строки
+     */
     std::string serialize() const;
 
-    /// <summary>
-    /// Converts the JSON value to a C++ double, if and only if it is a number value.
-    /// Throws <see cref="json_exception"/>  if the value is not a number
-    /// </summary>
-    /// <returns>A double representation of the value</returns>
+    /**
+     * @brief Конвертирует JSON-значение в C++ double.
+     * @throw json_exception если JSON-значение не является типом "Number"
+     * @return Представление значения в виде double
+     */
     double as_double() const;
 
-    /// <summary>
-    /// Converts the JSON value to a C++ integer, if and only if it is a number value.
-    /// Throws <see cref="json_exception"/> if the value is not a number
-    /// </summary>
-    /// <returns>An integer representation of the value</returns>
+    /**
+     * @brief Конвертирует JSON-значение в C++ int.
+     * @throw json_exception если JSON-значение не является типом "Number"
+     * @return Представление значения в виде целого числа
+     */
     int as_integer() const;
 
-    /// <summary>
-    /// Converts the JSON value to a json array, if and only if it is an array value.
-    /// </summary>
-    /// <remarks>The returned <c>json::array</c> should have the same or shorter lifetime as <c>this</c></remarks>
-    /// <returns>An array representation of the value</returns>
-    json::array& as_array();
-
-    /// <summary>
-    /// Converts the JSON value to a json array, if and only if it is an array value.
-    /// </summary>
-    /// <remarks>The returned <c>json::array</c> should have the same or shorter lifetime as <c>this</c></remarks>
-    /// <returns>An array representation of the value</returns>
+    /**
+     * @brief Конвертирует JSON-значение в JSON-массив
+     * @throw json_exception если JSON-значение не является типом "Array"
+     * @remarks Возвращенный json::array должен иметь такое же или меньшее время жизни, как this
+     * @return Представление значение в виде массива
+     */
     const json::array& as_array() const;
 
-    /// <summary>
-    /// Converts the JSON value to a C++ STL string, if and only if it is a string value.
-    /// </summary>
-    /// <returns>A C++ STL string representation of the value</returns>
+    /**
+     * @brief Конвертирует JSON-значение в C++ строку.
+     * @throw json_exception если JSON-значение не является типом "String"
+     * @return Представление значения в виде строки
+     */
     const std::string& as_string() const;
 
-    /// <summary>
-    /// Accesses an element of a JSON array. Throws when index out of bounds.
-    /// </summary>
-    /// <param name="index">The index of an element in the JSON array.</param>
-    /// <returns>A reference to the value.</returns>
+    /**
+     * @brief Предоставляет доступ к элементу JSON-массива.
+     * @param index позиция элемента в массиве
+     * @throw json_exception если index выходит за предел
+     * @return Ссылка на элемент
+     */
     json::value& at(size_t index);
 
-    /// <summary>
-    /// Accesses an element of a JSON array. Throws when index out of bounds.
-    /// </summary>
-    /// <param name="index">The index of an element in the JSON array.</param>
-    /// <returns>A reference to the value.</returns>
+    /**
+     * @brief Предоставляет доступ к элементу JSON-массива.
+     * @param index позиция элемента в массиве
+     * @throw json_exception если index выходит за предел
+     * @return Ссылка на элемент
+     */
     const json::value& at(size_t index) const;
 
-    /// <summary>
-    /// Accesses an element of a JSON object. If the key doesn't exist, this method throws.
-    /// </summary>
-    /// <param name="key">The key of an element in the JSON object.</param>
-    /// <returns>If the key exists, a reference to the value.</returns>
+    /**
+     * @brief Предоставляет доступ к элементу JSON-объекта.
+     * @param key ключ по которому производится поиск элементы
+     * @throw json_exception если не найдено
+     * @return Ссылка на элемент
+     */
     json::value& at(const std::string& key);
 
-    /// <summary>
-    /// Accesses an element of a JSON object. If the key doesn't exist, this method throws.
-    /// </summary>
-    /// <param name="key">The key of an element in the JSON object.</param>
-    /// <returns>If the key exists, a reference to the value.</returns>
+    /**
+     * @brief Предоставляет доступ к элементу JSON-объекта.
+     * @param key ключ по которому производится поиск элементы
+     * @throw json_exception если не найдено
+     * @return Ссылка на элемент
+     */
     const json::value& at(const std::string& key) const;
 
 private:
@@ -315,13 +303,13 @@ public:
     {
     }
 
-    // Must be narrow string because it derives from std::exception
     const char* what() const noexcept { return _message.c_str(); }
 };
 
-/// <summary>
-/// A JSON array represented as a C++ class.
-/// </summary>
+/**
+ * @class array
+ * @brief Массив JSON, представленный как C++ класс.
+ */
 class array {
     typedef std::vector<json::value> storage_type;
 
@@ -338,34 +326,34 @@ private:
     array(storage_type elements);
 
 public:
-    /// <summary>
-    /// Gets the beginning iterator element of the array
-    /// </summary>
-    /// <returns>An <c>iterator</c> to the beginning of the JSON array.</returns>
+    /**
+     * @brief Возвращает итератор, ссылающийся на первый элемент массива
+     * @return Итератор, ссылающийся на первый элемент массива
+     */
     iterator begin();
 
-    /// <summary>
-    /// Gets the beginning const iterator element of the array.
-    /// </summary>
-    /// <returns>A <c>const_iterator</c> to the beginning of the JSON array.</returns>
+    /**
+     * @brief Возвращает константный итератор, ссылающийся на первый элемент массива
+     * @return Константный итератор, ссылающийся на первый элемент массива
+     */
     const_iterator begin() const;
 
-    /// <summary>
-    /// Gets the end iterator element of the array
-    /// </summary>
-    /// <returns>An <c>iterator</c> to the end of the JSON array.</returns>
+    /**
+     * @brief Возвращает итератор, ссылающийся на запредельный элемент массива
+     * @return Итератор, ссылающийся на запредельный элемент массива
+     */
     iterator end();
 
-    /// <summary>
-    /// Gets the end const iterator element of the array.
-    /// </summary>
-    /// <returns>A <c>const_iterator</c> to the end of the JSON array.</returns>
+    /**
+     * @brief Возвращает константный итератор, ссылающийся на запредельный элемент массива
+     * @return Константный итератор, ссылающийся на запредельный элемент массива
+     */
     const_iterator end() const;
 
-    /// <summary>
-    /// Gets the number of elements of the array.
-    /// </summary>
-    /// <returns>The number of elements.</returns>
+    /**
+     * @brief Возвращает количество элементов в массиве
+     * @return Количество элементов в массиве
+     */
     size_type size() const;
 
 private:
@@ -466,11 +454,6 @@ inline double value::as_double() const
 }
 
 inline int value::as_integer() const
-{
-    // TODO implement this
-}
-
-inline array& value::as_array()
 {
     // TODO implement this
 }
