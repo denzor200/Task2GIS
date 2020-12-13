@@ -16,4 +16,5 @@ target_include_directories(${PROJECT_NAME} PUBLIC "src")
 
 TARGET_LINK_LIBRARIES(${PROJECT_NAME}
         boost_program_options
+        stdc++fs
         )
