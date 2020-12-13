@@ -82,6 +82,22 @@ public:
      */
     size_type size() const;
 
+    /**
+     * @brief Предоставляет доступ к элементу в массиве.
+     * @param index индекс элемента в массиве
+     * @throw json_exception если индекс выходит за предел
+     * @return ссылка на элемент
+     */
+    json::value& at(size_type index);
+
+    /**
+     * @brief Предоставляет доступ к элементу в массиве.
+     * @param index индекс элемента в массиве
+     * @throw json_exception если индекс выходит за предел
+     * @return ссылка на элемент
+     */
+    const json::value& at(size_type index) const;
+
 private:
     friend class json::value;
     storage_type m_elements;
@@ -369,6 +385,14 @@ public:
      * @remarks Возвращенный json::array должен иметь такое же или меньшее время жизни, как this
      * @return Представление значение в виде массива
      */
+    json::array& as_array();
+
+    /**
+     * @brief Конвертирует JSON-значение в JSON-массив
+     * @throw json_exception если JSON-значение не является типом "Array"
+     * @remarks Возвращенный json::array должен иметь такое же или меньшее время жизни, как this
+     * @return Представление значение в виде массива
+     */
     const json::array& as_array() const;
 
     /**
@@ -388,6 +412,15 @@ public:
      */
     const json::value& at(const std::string& key) const;
 
+    /**
+     * @brief Предоставляет доступ к полю JSON-объекта
+     * @param key имя искомого поля
+     * @throw json_exception если JSON-значение не является типом "Object"
+     * @remarks Возвращенный json::value должен иметь такое же или меньшее время жизни, как this
+     * @return Ссылка на элемент
+     */
+    json::value& operator[](const std::string& key);
+
 private:
     std::optional<std::variant<int, double, std::string, json::array, json::object>> m_value;
 };
@@ -401,6 +434,19 @@ inline array::iterator array::end() { return m_elements.end(); }
 inline array::const_iterator array::end() const { return m_elements.cend(); }
 
 inline array::size_type array::size() const { return m_elements.size(); }
+
+inline value& array::at(array::size_type index)
+{
+    return const_cast<json::value&>(static_cast<const array&>(*this).at(index));
+}
+
+inline const value& array::at(array::size_type index) const
+{
+    if (index >= m_elements.size())
+        throw json_exception("index out of bounds");
+
+    return m_elements[index];
+}
 
 inline object::iterator object::begin() { return m_elements.begin(); }
 
@@ -594,6 +640,11 @@ inline int value::as_integer() const
     return ret.value();
 }
 
+inline array& value::as_array()
+{
+    return const_cast<json::array&>(static_cast<const value&>(*this).as_array());
+}
+
 inline const array& value::as_array() const
 {
     auto ret = std::optional<std::reference_wrapper<const json::array>> {};
@@ -641,6 +692,25 @@ inline const value& value::at(const std::string& key) const
                        [](const auto&) {},
                        [&](const json::object& arg) {
                            ret = arg.at(key);
+                       } },
+            m_value.value());
+    }
+
+    if (!ret.has_value())
+        throw json_exception("Key not found");
+
+    return ret.value();
+}
+
+inline value& value::operator[](const std::string& key)
+{
+    auto ret = std::optional<std::reference_wrapper<json::value>> {};
+
+    if (m_value.has_value()) {
+        std::visit(overloaded {
+                       [](auto&) {},
+                       [&](json::object& arg) {
+                           ret = arg[key];
                        } },
             m_value.value());
     }

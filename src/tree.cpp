@@ -1,6 +1,7 @@
 #include "tree.h"
 #include "json/value.h"
 #include <algorithm>
+#include <boost/range/adaptors.hpp>
 #include <optional>
 
 tree::tree(int value, std::vector<tree> childs) noexcept
@@ -47,7 +48,26 @@ tree tree::parse(const json::value& root)
 
 json::value tree::serialize() const
 {
-    auto output = json::value {};
+    auto output = json::value::object();
+
+    std::visit(overloaded {
+                   [&](const std::string& arg) {
+                       output[NODE_FN] = json::value::string(arg);
+                   },
+                   [&](int arg) {
+                       output[NODE_FN] = json::value::number(arg);
+                   },
+                   [&](double arg) {
+                       output[NODE_FN] = json::value::number(arg);
+                   } },
+        m_node);
+
+    for (const auto& sub : m_subnodes | boost::adaptors::indexed(0)) {
+        if (!output.has_field(SUBNODES_FN))
+            output[SUBNODES_FN] = json::value::array(m_subnodes.size());
+        auto& childs = output[SUBNODES_FN].as_array();
+        childs.at(sub.index()) = sub.value().serialize();
+    }
 
     return output;
 }
