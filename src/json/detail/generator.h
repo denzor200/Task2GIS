@@ -24,6 +24,7 @@ public:
     std::string string() const;
 
 private:
+    void generate2nd();
     void generateNull();
     void generateNumber();
     void generateString();

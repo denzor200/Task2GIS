@@ -14,10 +14,13 @@ generator::generator(const json::value& value)
 
 void generator::generate()
 {
-    BOOST_ASSERT(m_value);
-
     m_ss << std::string(m_level, ' ');
+    generate2nd();
+}
 
+void generator::generate2nd()
+{
+    BOOST_ASSERT(m_value);
     switch (m_value->type()) {
     case json::value::Null:
         generateNull();
@@ -94,12 +97,9 @@ void generator::generateArray()
     m_ss << std::string(m_level, ' ') << ']';
 }
 
-template <typename T>
-class TD;
-
 void generator::generateObject()
 {
-    m_ss << '{';
+    m_ss << '{' << std::endl;
 
     auto prevValue = m_value;
     auto prevLevel = m_level;
@@ -115,7 +115,7 @@ void generator::generateObject()
         m_ss << " : ";
 
         setValueRef(second, prevLevel + 1);
-        generate();
+        generate2nd();
 
         m_ss << ((memPair.index() == object.size() - 1) ? "" : ",") << std::endl;
     }
