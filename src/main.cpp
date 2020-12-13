@@ -6,9 +6,12 @@ namespace po = boost::program_options;
 
 int main(int argc, char** argv)
 {
+    int status = 1;
+    bool isValidArgs = false;
+
     po::options_description desc("Allowed options");
     desc.add_options() ///
-        ("help", "produce help message") ///
+        ("help,h", "produce help message") ///
         ("input,i", po::value<std::string>(), "forward path to input file") ///
         ("output,o", po::value<std::string>(), "forward path to output file");
 
@@ -21,18 +24,24 @@ int main(int argc, char** argv)
         return 1;
     }
 
-    if (vm.count("input")) {
+    isValidArgs = true;
+    if (vm.count("input") == 0) {
         std::cerr << "Path to input file was not set.\n";
-        return 1;
+        isValidArgs = false;
     }
 
-    if (vm.count("output")) {
+    if (vm.count("output") == 0) {
         std::cerr << "Path to output file was not set.\n";
-        return 1;
+        isValidArgs = false;
     }
 
-    application app;
-    app.setInput(vm["input"].as<std::string>());
-    app.setOutput(vm["output"].as<std::string>());
-    return app.work();
+    if (!isValidArgs)
+        std::cerr << "Please run '" << argv[0] << " --help' for more info\n";
+    else {
+        application app;
+        app.setInput(vm["input"].as<std::string>());
+        app.setOutput(vm["output"].as<std::string>());
+        status = app.work();
+    }
+    return status;
 }
