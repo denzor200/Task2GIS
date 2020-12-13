@@ -1,5 +1,7 @@
 #include "tree.h"
 #include "json/value.h"
+#include <algorithm>
+#include <optional>
 
 tree::tree(int value, std::vector<tree> childs) noexcept
     : m_value(std::move(value))

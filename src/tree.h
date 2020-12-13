@@ -40,8 +40,8 @@ public:
     const std::vector<tree>& childs() const noexcept;
 
 private:
-    static inline const std::string VALUE_FN = "value";
-    static inline const std::string CHILDS_FN = "childs";
+    static inline const std::string VALUE_FN = "value"; // TODO: rename to node
+    static inline const std::string CHILDS_FN = "childs"; // TODO: rename to subnodes
 
     std::variant<std::string, int, double> m_value;
     std::vector<tree> m_childs;
