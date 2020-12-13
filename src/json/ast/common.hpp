@@ -1,6 +1,7 @@
-#ifndef COMMON_HPP
-#define COMMON_HPP
+#ifndef INC_AST_COMMON_HPP
+#define INC_AST_COMMON_HPP
 
+#include "ast_adapted.hpp"
 #include <boost/spirit/home/x3.hpp>
 
 namespace json_client {
@@ -62,4 +63,4 @@ struct json_client::x3::get_info<json_client::esc_guard> {
     }
 };
 
-#endif // COMMON_HPP
+#endif // INC_AST_COMMON_HPP

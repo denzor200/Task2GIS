@@ -2,9 +2,12 @@
 #define INC_AST_VALUE_DEF_HPP
 
 #include "ast.hpp"
+#include "ast_adapted.hpp"
 #include "common.hpp"
+#include "error_handler.hpp"
 #include "value.hpp"
 #include <boost/spirit/home/x3.hpp>
+#include <boost/spirit/home/x3/support/utility/annotate_on_success.hpp>
 #include <mutex>
 
 namespace json_client {
@@ -51,7 +54,7 @@ namespace parser {
     object_type const object("object");
 
     auto const null_def = lexeme[null_kw];
-    auto const value_def = null | quoted | double_ | int_ | array; // TODO: парсинг объекта
+    auto const value_def = null | quoted | double_ | int_ | array | object;
     auto const array_def = lit('[')
         > -(value % ',')
         > lit(']');
@@ -68,6 +71,8 @@ namespace parser {
 
     BOOST_SPIRIT_DEFINE(value, array, quoted, null, member_pair, object);
 
+    struct value_class : error_handler_base, x3::annotate_on_success {
+    };
 } // end of namespace parser
 } // end of namespace json_client
 
