@@ -47,6 +47,7 @@ json::value::value(double value)
 json::value::value(std::string value)
     : m_value(value)
 {
+    // TODO: реализовать валидацию
 }
 
 json::value json::value::parse(const std::string& value)

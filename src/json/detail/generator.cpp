@@ -1,6 +1,7 @@
 #include "generator.h"
 #include "json/value.h"
 #include <boost/assert.hpp>
+#include <boost/math/special_functions/fpclassify.hpp>
 #include <boost/range/adaptors.hpp>
 #include <iomanip>
 
@@ -14,6 +15,8 @@ generator::generator(const json::value& value)
 void generator::generate()
 {
     BOOST_ASSERT(m_value);
+
+    m_ss << std::string(m_level, ' ');
 
     switch (m_value->type()) {
     case json::value::Null:
@@ -43,15 +46,26 @@ void generator::generate()
 
 void generator::generateNull()
 {
-    m_ss << std::string(m_level, ' ') << "null";
+    m_ss << "null";
 }
 
 void generator::generateNumber()
 {
-    if (m_value->is_double())
-        m_ss << std::string(m_level, ' ') << m_value->as_double();
-    else if (m_value->is_integer())
-        m_ss << std::string(m_level, ' ') << m_value->as_integer();
+    if (m_value->is_double()) {
+        auto d = m_value->as_double();
+        if (boost::math::isnan(d)) {
+            m_ss << "NaN";
+        }
+        if (boost::math::isinf(d)) {
+            if (d < 0.0) {
+                m_ss << '-';
+            }
+            m_ss << "Infinity";
+        } else {
+            m_ss << d;
+        }
+    } else if (m_value->is_integer())
+        m_ss << m_value->as_integer();
     else {
         throw std::runtime_error("invalid json");
     }
@@ -59,12 +73,12 @@ void generator::generateNumber()
 
 void generator::generateString()
 {
-    m_ss << std::string(m_level, ' ') << std::quoted(m_value->as_string());
+    m_ss << std::quoted(m_value->as_string());
 }
 
 void generator::generateArray()
 {
-    m_ss << std::string(m_level, ' ') << '[' << std::endl;
+    m_ss << '[' << std::endl;
 
     auto prevValue = m_value;
     auto prevLevel = m_level;
@@ -82,6 +96,6 @@ void generator::generateArray()
 
 void generator::generateObject()
 {
-    m_ss << std::string(m_level, ' ') << '{';
+    m_ss << '{';
     // TODO: implement this
 }
