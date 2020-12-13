@@ -25,12 +25,12 @@ int application::work()
 
 void application::printTree(const tree& tree, unsigned level)
 {
-    if (tree.is_double())
-        std::cout << std::string(level, '-') << tree.as_double() << std::endl;
-    else if (tree.is_integer())
-        std::cout << std::string(level, '-') << tree.as_integer() << std::endl;
-    else if (tree.is_string())
-        std::cout << std::string(level, '-') << std::quoted(tree.as_string()) << std::endl;
+    if (tree.isDouble())
+        std::cout << std::string(level, '-') << tree.asDouble() << std::endl;
+    else if (tree.isInteger())
+        std::cout << std::string(level, '-') << tree.asInteger() << std::endl;
+    else if (tree.isString())
+        std::cout << std::string(level, '-') << std::quoted(tree.asString()) << std::endl;
     else {
         std::cerr << "Invalid tree was detected!";
     }

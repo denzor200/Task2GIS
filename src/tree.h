@@ -19,17 +19,17 @@ public:
 
     explicit tree(std::string value, std::vector<tree> childs = {}) noexcept;
 
-    bool is_integer() const noexcept;
+    bool isInteger() const noexcept;
 
-    bool is_double() const noexcept;
+    bool isDouble() const noexcept;
 
-    bool is_string() const noexcept;
+    bool isString() const noexcept;
 
-    int as_integer() const;
+    int asInteger() const;
 
-    double as_double() const;
+    double asDouble() const;
 
-    std::string as_string() const;
+    std::string asString() const;
 
     static tree parse(const json::value& root);
 
@@ -40,51 +40,51 @@ public:
     const std::vector<tree>& childs() const noexcept;
 
 private:
-    static inline const std::string VALUE_FN = "value"; // TODO: rename to node
-    static inline const std::string CHILDS_FN = "childs"; // TODO: rename to subnodes
+    static inline const std::string NODE_FN = "node";
+    static inline const std::string SUBNODES_FN = "subnodes";
 
-    std::variant<std::string, int, double> m_value;
-    std::vector<tree> m_childs;
+    std::variant<std::string, int, double> m_node;
+    std::vector<tree> m_subnodes;
 };
 
-inline bool tree::is_integer() const noexcept
+inline bool tree::isInteger() const noexcept
 {
-    return !!(std::get_if<int>(&m_value));
+    return !!(std::get_if<int>(&m_node));
 }
 
-inline bool tree::is_double() const noexcept
+inline bool tree::isDouble() const noexcept
 {
-    return !!(std::get_if<double>(&m_value));
+    return !!(std::get_if<double>(&m_node));
 }
 
-inline bool tree::is_string() const noexcept
+inline bool tree::isString() const noexcept
 {
-    return !!(std::get_if<std::string>(&m_value));
+    return !!(std::get_if<std::string>(&m_node));
 }
 
-inline int tree::as_integer() const
+inline int tree::asInteger() const
 {
-    return std::get<int>(m_value);
+    return std::get<int>(m_node);
 }
 
-inline double tree::as_double() const
+inline double tree::asDouble() const
 {
-    return std::get<double>(m_value);
+    return std::get<double>(m_node);
 }
 
-inline std::string tree::as_string() const
+inline std::string tree::asString() const
 {
-    return std::get<std::string>(m_value);
+    return std::get<std::string>(m_node);
 }
 
 inline std::vector<tree>& tree::childs() noexcept
 {
-    return m_childs;
+    return m_subnodes;
 }
 
 inline const std::vector<tree>& tree::childs() const noexcept
 {
-    return m_childs;
+    return m_subnodes;
 }
 
 #endif // TREE_H
