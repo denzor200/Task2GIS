@@ -1,0 +1,47 @@
+{
+	"node" : 8,
+	"subnodes" : [
+		{
+			"node" : "bar",
+			"subnodes" : [
+				{
+					"node" : 2.015,
+					"subnodes" : [
+						{
+							"node" : 9
+						}
+					]
+				},
+				{
+					"node" : 2015
+				},
+				{
+					"node" : "2015"
+				}
+			]
+		},
+		{
+			"node" : "baz",
+			"subnodes" : [
+				{
+					"node" : "foo"
+				},
+				{
+					"node" : 6.28318,
+					"subnodes" : [
+						{
+							"node" : "hello"
+						}
+					]
+				}
+			]
+		}
+	]
+}
+
+
+
+
+
+
+

@@ -413,6 +413,22 @@ public:
     const json::value& at(const std::string& key) const;
 
     /**
+     * @brief Предоставляет доступ к элементу в массиве.
+     * @param index индекс элемента в массиве
+     * @throw json_exception если индекс выходит за предел
+     * @return ссылка на элемент
+     */
+    json::value& at(size_t index);
+
+    /**
+     * @brief Предоставляет доступ к элементу в массиве.
+     * @param index индекс элемента в массиве
+     * @throw json_exception если индекс выходит за предел
+     * @return ссылка на элемент
+     */
+    const json::value& at(size_t index) const;
+
+    /**
      * @brief Предоставляет доступ к полю JSON-объекта
      * @param key имя искомого поля
      * @throw json_exception если JSON-значение не является типом "Object"
@@ -700,6 +716,16 @@ inline const value& value::at(const std::string& key) const
         throw json_exception("Key not found");
 
     return ret.value();
+}
+
+inline value& value::at(size_t index)
+{
+    return as_array().at(index);
+}
+
+inline const value& value::at(size_t index) const
+{
+    return as_array().at(index);
 }
 
 inline value& value::operator[](const std::string& key)

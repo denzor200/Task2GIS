@@ -65,7 +65,7 @@ json::value tree::serialize() const
     for (const auto& sub : m_subnodes | boost::adaptors::indexed(0)) {
         if (!output.has_field(SUBNODES_FN))
             output[SUBNODES_FN] = json::value::array(m_subnodes.size());
-        auto& childs = output[SUBNODES_FN].as_array();
+        auto& childs = output[SUBNODES_FN];
         childs.at(sub.index()) = sub.value().serialize();
     }
 
