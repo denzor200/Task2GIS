@@ -35,6 +35,15 @@ struct AstHandler {
         }
         return ret;
     }
+    json::value operator()(const json_client::ast::object& arg) const
+    {
+        auto ret = json::value::object();
+        for (const auto& val : arg) {
+            // TODO: решить спорный вопрос с присвоением ключа
+            ret[val.first] = boost::apply_visitor(*this, val.second);
+        }
+        return ret;
+    }
 };
 }; // end of anonymous namespace
 
