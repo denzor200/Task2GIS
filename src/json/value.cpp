@@ -11,6 +11,10 @@ namespace {
 struct AstHandler {
     typedef json::value result_type;
 
+    json::value operator()(json_client::ast::null) const
+    {
+        return json::value::null();
+    }
     json::value operator()(int arg) const
     {
         return json::value::number(arg);

@@ -8,8 +8,10 @@
 namespace json_client {
 namespace x3 = boost::spirit::x3;
 namespace ast {
+    struct null {
+    };
     struct array;
-    struct value : x3::variant<int, double, std::string, x3::forward_ast<array>> {
+    struct value : x3::variant<null, int, double, std::string, x3::forward_ast<array>> {
         using base_type::base_type;
         using base_type::operator=;
     };

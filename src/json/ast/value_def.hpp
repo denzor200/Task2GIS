@@ -31,16 +31,20 @@ namespace parser {
     struct value_class;
     struct array_class;
     struct quoted_class;
+    struct null_class;
 
     typedef x3::rule<value_class, ast::value> value_type;
     typedef x3::rule<array_class, ast::array> array_type;
     typedef x3::rule<quoted_class, std::string> quoted_type;
+    typedef x3::rule<null_class, ast::null> null_type;
 
     value_type const value("value");
     array_type const array("array");
     quoted_type const quoted("quoted");
+    null_type const null("null");
 
-    auto const value_def = int_ | double_ | array | quoted; // TODO: парсинг объекта
+    auto const null_def = lexeme[null_kw];
+    auto const value_def = null | quoted | double_ | int_ | array; // TODO: парсинг объекта
     auto const array_def = x3::lit('[')
         > -(value % ',')
         > x3::lit(']');
@@ -49,7 +53,7 @@ namespace parser {
     // TODO: вспомнить чем отличается ">" от ">>"
     // TODO: вспомнить про x3::lit
 
-    BOOST_SPIRIT_DEFINE(value, array, quoted);
+    BOOST_SPIRIT_DEFINE(value, array, quoted, null);
 
 } // end of namespace parser
 } // end of namespace json_client
