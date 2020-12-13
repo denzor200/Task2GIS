@@ -396,6 +396,14 @@ public:
     const json::array& as_array() const;
 
     /**
+     * @brief Конвертирует JSON-значение в JSON-объект
+     * @throw json_exception если JSON-значение не является типом "Object"
+     * @remarks Возвращенный json::object должен иметь такое же или меньшее время жизни, как this
+     * @return Представление значение в виде объекта
+     */
+    const json::object& as_object() const;
+
+    /**
      * @brief Конвертирует JSON-значение в C++ строку.
      * @throw json_exception если JSON-значение не является типом "String"
      * @remarks Возвращенный std::string должен иметь такое же или меньшее время жизни, как this
@@ -676,6 +684,25 @@ inline const array& value::as_array() const
 
     if (!ret.has_value())
         throw json_exception("not an array");
+
+    return ret.value();
+}
+
+inline const object& value::as_object() const
+{
+    auto ret = std::optional<std::reference_wrapper<const json::object>> {};
+
+    if (m_value.has_value()) {
+        std::visit(overloaded {
+                       [](const auto&) {},
+                       [&](const json::object& arg) {
+                           ret = arg;
+                       } },
+            m_value.value());
+    }
+
+    if (!ret.has_value())
+        throw json_exception("not an object");
 
     return ret.value();
 }

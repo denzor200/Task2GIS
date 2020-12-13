@@ -94,8 +94,32 @@ void generator::generateArray()
     m_ss << std::string(m_level, ' ') << ']';
 }
 
+template <typename T>
+class TD;
+
 void generator::generateObject()
 {
     m_ss << '{';
-    // TODO: implement this
+
+    auto prevValue = m_value;
+    auto prevLevel = m_level;
+
+    const auto& object = m_value->as_object();
+    for (const auto& memPair : object | boost::adaptors::indexed(0)) {
+        auto first = json::value::string(memPair.value().first);
+        auto second = std::cref(memPair.value().second);
+
+        setValueRef(first, prevLevel + 1);
+        generate();
+
+        m_ss << " : ";
+
+        setValueRef(second, prevLevel + 1);
+        generate();
+
+        m_ss << ((memPair.index() == object.size() - 1) ? "" : ",") << std::endl;
+    }
+
+    setValueRef(*prevValue, prevLevel);
+    m_ss << std::string(m_level, ' ') << '}';
 }
