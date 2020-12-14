@@ -66,9 +66,6 @@ namespace parser {
         >> -(member_pair % ',')
         >> lit('}');
 
-    // TODO: вспомнить чем отличается ">" от ">>"
-    // TODO: вспомнить про x3::lit
-
     BOOST_SPIRIT_DEFINE(value, array, quoted, null, member_pair, object);
 
     struct value_class : error_handler_base, x3::annotate_on_success {

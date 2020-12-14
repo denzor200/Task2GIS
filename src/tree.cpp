@@ -33,7 +33,7 @@ tree tree::parse(const json::value& root)
     else if (value.is_string())
         output = tree { value.as_string() };
     else {
-        // TODO: throw exception
+        throw tree_exception("can't parse tree");
     }
 
     if (root.has_field(SUBNODES_FN)) {

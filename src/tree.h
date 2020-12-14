@@ -5,38 +5,120 @@
 #include <variant>
 #include <vector>
 
-// TODO: docs
-
 namespace json {
 class value;
 } // end of namespace json
 
+/**
+ * @class tree_exception
+ */
+class tree_exception : public std::exception {
+private:
+    std::string _message;
+
+public:
+    tree_exception(const char* const message)
+        : _message(message)
+    {
+    }
+    tree_exception(std::string&& message)
+        : _message(std::move(message))
+    {
+    }
+
+    const char* what() const noexcept { return _message.c_str(); }
+};
+
+/**
+ * @class tree
+ * @brief Дерево, в узлах которого могут храниться данные трёх типов
+ */
 class tree {
 public:
+    /**
+     * @brief Конструирует дерево с целочисленным значением в корневом элементе
+     * @param value целочисленное значение
+     * @param childs дочерние элементы дерева
+     */
     explicit tree(int value, std::vector<tree> childs = {}) noexcept;
 
+    /**
+     * @brief Конструирует дерево с числом с плавающей точкой двойной точности в корневом элементе
+     * @param value число с плавающей точкой двойной точности
+     * @param childs дочерние элементы дерева
+     */
     explicit tree(double value, std::vector<tree> childs = {}) noexcept;
 
+    /**
+     * @brief Конструирует дерево со строкой в корневом элементе
+     * @param value строка
+     * @param childs дочерние элементы дерева
+     */
     explicit tree(std::string value, std::vector<tree> childs = {}) noexcept;
 
+    /**
+     * @brief Хранит ли корневой узел целочисленное значение?
+     * @return false если не хранит
+     */
     bool isInteger() const noexcept;
 
+    /**
+     * @brief Хранит ли корневой узел число с плавающей точкой двойной точности?
+     * @return false если не хранит
+     */
     bool isDouble() const noexcept;
 
+    /**
+     * @brief Хранит ли корневой узел строку?
+     * @return false если не хранит
+     */
     bool isString() const noexcept;
 
+    /**
+     * @brief Возвращает хранимое в корневом узле целочисленное значение
+     * @throw std::bad_variant_access если узел хранит значение другого типа
+     * @return целочисленное значение
+     */
     int asInteger() const;
 
+    /**
+     * @brief Возвращает хранимое в корневом узле число с плавающей точкой двойной точности
+     * @throw std::bad_variant_access если узел хранит значение другого типа
+     * @return число с плавающей точкой двойной точности
+     */
     double asDouble() const;
 
+    /**
+     * @brief Возвращает хранимую в корневом узле строку
+     * @throw std::bad_variant_access если узел хранит значение другого типа
+     * @return строка
+     */
     std::string asString() const;
 
+    /**
+     * @brief выполняет парсинг JSON-значения в дерево.
+     * @param root JSON-значение
+     * @throw tree_exception если парсинг не удался
+     * @return Созданный из парсинга JSON-значения экземпляр
+     */
     static tree parse(const json::value& root);
 
+    /**
+     * @brief Выполняет сериализацию дерева в JSON-значение
+     * @return JSON-значение
+     */
     json::value serialize() const;
 
+    /**
+     * @brief Возвращает ссылку на контейнер дочерних элементов дерева
+     * @return ссылка на контейнер дочерних элементов
+     */
     std::vector<tree>& childs() noexcept;
 
+    /**
+     * @brief Возвращает ссылку на контейнер дочерних элементов дерева
+     * @return ссылка на контейнер дочерних элементов
+     */
     const std::vector<tree>& childs() const noexcept;
 
 private:
