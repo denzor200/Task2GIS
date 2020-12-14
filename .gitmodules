@@ -1,0 +1,3 @@
+[submodule "3pp/boost"]
+	path = 3pp/boost
+	url = https://github.com/boostorg/boost.git
