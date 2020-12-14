@@ -223,7 +223,7 @@ public:
      * @param value Значение C++ из которого создается JSON-значение
      * @remarks Этот конструктор работает за O(n), поскольку он пытается определить, есть ли в указанной строке символы, которые должны быть правильно экранированы в JSON.
      */
-    explicit value(std::string value);
+    explicit value(const std::string& value);
 
     /**
      * @brief Копирующий конструктор
@@ -488,11 +488,6 @@ inline const value& object::at(const std::string& key) const
     if (m_elements.end() == it)
         throw json::json_exception("Key not found");
     return it->second;
-}
-
-inline value& object::operator[](const std::string& key)
-{
-    return m_elements[key];
 }
 
 inline object::const_iterator object::find(const std::string& key) const

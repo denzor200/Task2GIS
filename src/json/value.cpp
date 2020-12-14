@@ -45,6 +45,18 @@ struct AstHandler {
         return ret;
     }
 };
+
+void validateInputString(const std::string& value)
+{
+    auto it = std::find_if(value.begin(), value.end(), [](const char ch) {
+        return (ch == '\n' || ch == '\r' || ch == '\\');
+    });
+    if (value.end() != it) {
+        std::stringstream ss;
+        ss << "unsupported character '" << static_cast<int>(*it) << "'";
+        throw json::json_exception(ss.str());
+    }
+}
 }; // end of anonymous namespace
 
 json::value::value(int value)
@@ -57,10 +69,10 @@ json::value::value(double value)
 {
 }
 
-json::value::value(std::string value)
+json::value::value(const std::string& value)
     : m_value(value)
 {
-    // TODO: реализовать валидацию
+    validateInputString(value);
 }
 
 json::value json::value::parse(const std::string& value)
@@ -100,4 +112,10 @@ std::string json::value::serialize() const
 json::array::array(json::array::size_type size)
     : m_elements(size)
 {
+}
+
+json::value& json::object::operator[](const std::string& key)
+{
+    validateInputString(key);
+    return m_elements[key];
 }
